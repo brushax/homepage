@@ -1176,6 +1176,22 @@
         "previousMonthlyCost": "Prev. Month",
         "nextRenewingSubscription": "Next Payment"
     },
+    "sub2api": {
+        "today_requests": "Requests",
+        "today_tokens": "Tokens",
+        "today_actual_cost": "Cost",
+        "total_requests": "Total Req",
+        "total_tokens": "Total Tokens",
+        "total_actual_cost": "Total Cost",
+        "rpm": "RPM",
+        "tpm": "TPM",
+        "active_users": "Users",
+        "active_api_keys": "API Keys",
+        "total_accounts": "Accounts",
+        "error_accounts": "Errors",
+        "average_duration_ms": "Latency",
+        "uptime": "Uptime"
+    },
     "unraid": {
         "STARTED": "Started",
         "STOPPED": "Stopped",

@@ -160,6 +160,7 @@ nav:
           - widgets/services/spoolman.md
           - widgets/services/stash.md
           - widgets/services/stocks.md
+          - widgets/services/sub2api.md
           - widgets/services/suwayomi.md
           - widgets/services/swagdashboard.md
           - widgets/services/syncthing-relay-server.md

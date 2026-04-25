@@ -1160,6 +1160,22 @@
         "previousMonthlyCost": "Prev. Month",
         "nextRenewingSubscription": "Next Payment"
     },
+    "sub2api": {
+        "today_requests": "请求",
+        "today_tokens": "Tokens",
+        "today_actual_cost": "费用",
+        "total_requests": "总请求",
+        "total_tokens": "总 Tokens",
+        "total_actual_cost": "总费用",
+        "rpm": "RPM",
+        "tpm": "TPM",
+        "active_users": "用户",
+        "active_api_keys": "API Keys",
+        "total_accounts": "账号",
+        "error_accounts": "异常",
+        "average_duration_ms": "延迟",
+        "uptime": "在线时长"
+    },
     "unraid": {
         "STARTED": "已启动",
         "STOPPED": "已停止",

@@ -127,6 +127,7 @@ import spoolman from "./spoolman/widget";
 import stash from "./stash/widget";
 import stocks from "./stocks/widget";
 import strelaysrv from "./strelaysrv/widget";
+import sub2api from "./sub2api/widget";
 import suwayomi from "./suwayomi/widget";
 import swagdashboard from "./swagdashboard/widget";
 import tailscale from "./tailscale/widget";
@@ -290,8 +291,9 @@ const widgets = {
   stash,
   stocks,
   strelaysrv,
-  swagdashboard,
+  sub2api,
   suwayomi,
+  swagdashboard,
   tailscale,
   tandoor,
   tautulli,

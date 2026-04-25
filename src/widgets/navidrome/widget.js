@@ -1,12 +1,16 @@
 import navidromeProxyHandler from "./proxy";
 
 const widget = {
-  api: "{url}/rest/{endpoint}?u={user}&t={token}&s={salt}&v=1.16.1&c=homepage&f=json",
+  api: "{url}",
   proxyHandler: navidromeProxyHandler,
 
   mappings: {
     getNowPlaying: {
       endpoint: "getNowPlaying",
+    },
+    Library: {
+      endpoint: "Library",
+      validate: ["totalSongs", "totalAlbums", "totalArtists"],
     },
   },
 };

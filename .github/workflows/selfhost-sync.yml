@@ -1,0 +1,39 @@
+name: Selfhost Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 1 * * *"
+
+concurrency:
+  group: selfhost-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Rebase selfhost branch onto upstream/dev
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout selfhost branch
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: selfhost/dev
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync selfhost branch
+        env:
+          CUSTOM_BRANCH: selfhost/dev
+          ORIGIN_REMOTE: origin
+          UPSTREAM_REMOTE: upstream
+          UPSTREAM_BRANCH: dev
+          PUSH_AFTER_REBASE: "1"
+          ALLOW_DIRTY: "1"
+        run: ./tools/sync-upstream.sh

@@ -112,6 +112,11 @@ export default async function credentialedProxyHandler(req, res, map) {
         headers.Authorization = basicAuthHeader(widget);
       } else if (widget.type === "plantit") {
         headers.Key = `${widget.key}`;
+      } else if (widget.type === "archisteamfarm") {
+        const password = widget.password?.toString().trim();
+        if (password) {
+          headers.Authentication = password;
+        }
       } else if (widget.type === "myspeed") {
         headers.Password = `${widget.password}`;
       } else if (widget.type === "esphome") {

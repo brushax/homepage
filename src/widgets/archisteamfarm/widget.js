@@ -1,10 +1,9 @@
-import archisteamfarmProxyHandler from "./proxy";
-
+import credentialedProxyHandler from "utils/proxy/handlers/credentialed";
 import { asJson } from "utils/proxy/api-helpers";
 
 const widget = {
   api: "{url}/Api/{endpoint}",
-  proxyHandler: archisteamfarmProxyHandler,
+  proxyHandler: credentialedProxyHandler,
 
   mappings: {
     bots: {

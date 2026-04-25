@@ -25,6 +25,7 @@ vi.mock("widgets/widgets", () => ({
     coinmarketcap: { api: "{url}/{endpoint}" },
     gotify: { api: "{url}/{endpoint}" },
     plantit: { api: "{url}/{endpoint}" },
+    archisteamfarm: { api: "{url}/{endpoint}" },
     myspeed: { api: "{url}/{endpoint}" },
     esphome: { api: "{url}/{endpoint}" },
     wgeasy: { api: "{url}/{endpoint}" },
@@ -300,6 +301,7 @@ describe("utils/proxy/handlers/credentialed", () => {
       [{ type: "coinmarketcap", url: "http://x", key: "k" }, { "X-CMC_PRO_API_KEY": "k" }],
       [{ type: "gotify", url: "http://x", key: "k" }, { "X-gotify-Key": "k" }],
       [{ type: "plantit", url: "http://x", key: "k" }, { Key: "k" }],
+      [{ type: "archisteamfarm", url: "http://x", password: 123456 }, { Authentication: "123456" }],
       [{ type: "myspeed", url: "http://x", password: "p" }, { Password: "p" }],
       [{ type: "proxmox", url: "http://x", username: "u", password: "p" }, { Authorization: "PVEAPIToken=u=p" }],
       [{ type: "autobrr", url: "http://x", key: "k" }, { "X-API-Token": "k" }],
@@ -333,6 +335,19 @@ describe("utils/proxy/handlers/credentialed", () => {
       const [, params] = httpProxy.mock.calls.at(-1);
       expect(params.headers).toEqual(expect.objectContaining(expected));
     }
+  });
+
+  it("does not send an empty Authentication header for archisteamfarm", async () => {
+    getServiceWidget.mockResolvedValue({ type: "archisteamfarm", url: "http://x", password: "   " });
+    httpProxy.mockResolvedValue([200, "application/json", { ok: true }]);
+
+    const req = { method: "GET", query: { group: "g", service: "s", endpoint: "Api/ASF", index: 0 } };
+    const res = createMockRes();
+
+    await credentialedProxyHandler(req, res);
+
+    const [, params] = httpProxy.mock.calls.at(-1);
+    expect(params.headers.Authentication).toBeUndefined();
   });
 
   it("merges registry/widget/request headers and falls back to X-API-Key for unknown types", async () => {

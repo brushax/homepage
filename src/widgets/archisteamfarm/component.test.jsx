@@ -47,6 +47,21 @@ describe("widgets/archisteamfarm/component", () => {
     expect(container.querySelectorAll(".service-block")).toHaveLength(4);
   });
 
+  it("falls back to default fields when widget.fields only contains unsupported values", () => {
+    useWidgetAPI.mockReturnValue({ data: undefined, error: undefined });
+
+    const { container } = renderWithProviders(
+      <Component service={{ widget: { type: "archisteamfarm", fields: ["bogus"] } }} />,
+      {
+        settings: { hideErrors: false },
+      },
+    );
+
+    expect(container.querySelectorAll(".service-block")).toHaveLength(4);
+    expect(screen.getByText("archisteamfarm.bots")).toBeInTheDocument();
+    expect(screen.getByText("archisteamfarm.version")).toBeInTheDocument();
+  });
+
   it("renders an error container when the API errors", () => {
     useWidgetAPI.mockReturnValue({ data: undefined, error: { message: "boom" } });
 
@@ -122,6 +137,23 @@ describe("widgets/archisteamfarm/component", () => {
     expect(screen.getByText("archisteamfarm.uptime")).toBeInTheDocument();
     expect(screen.queryByText("archisteamfarm.bots")).not.toBeInTheDocument();
     expect(screen.queryByText("archisteamfarm.memory")).not.toBeInTheDocument();
+  });
+
+  it("renders only the selected placeholders while loading", () => {
+    useWidgetAPI.mockReturnValue({ data: undefined, error: undefined });
+
+    const { container } = renderWithProviders(
+      <Component service={{ widget: { type: "archisteamfarm", fields: ["bots", "memory"] } }} />,
+      {
+        settings: { hideErrors: false },
+      },
+    );
+
+    expect(container.querySelectorAll(".service-block")).toHaveLength(2);
+    expect(screen.getByText("archisteamfarm.bots")).toBeInTheDocument();
+    expect(screen.getByText("archisteamfarm.memory")).toBeInTheDocument();
+    expect(screen.queryByText("archisteamfarm.version")).not.toBeInTheDocument();
+    expect(screen.queryByText("archisteamfarm.uptime")).not.toBeInTheDocument();
   });
 
   it("renders unknown for missing uptime", () => {

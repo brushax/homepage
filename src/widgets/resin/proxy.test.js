@@ -52,8 +52,8 @@ describe("widgets/resin/proxy", () => {
         Buffer.from(
           JSON.stringify({
             items: [
-              { ingress_bps: 1234, egress_bps: 5678 },
               { ingress_bps: 1000000, egress_bps: 2000000 },
+              { ingress_bps: 1234, egress_bps: 5678 },
             ],
           }),
         ),

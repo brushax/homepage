@@ -97,7 +97,7 @@ export default async function resinProxyHandler(req, res) {
           ? { url: poolURL, status: poolResult.status, data: poolResult.data }
           : throughputResult.status !== 200
             ? { url: throughputURL, status: throughputResult.status, data: throughputResult.data }
-          : { url: healthURL, status: healthResult.status, data: healthResult.data };
+            : { url: healthURL, status: healthResult.status, data: healthResult.data };
 
     logger.error("Error getting data from Resin: %d. Data: %o", failed.status, failed.data);
     return res.status(failed.status).json({

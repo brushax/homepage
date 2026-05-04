@@ -434,6 +434,15 @@
         "dataRelayed": "Relayed",
         "transferRate": "Rate"
     },
+    "resin": {
+        "ok": "Online",
+        "unknown": "Unknown",
+        "healthy_nodes": "Healthy",
+        "total_nodes": "Nodes",
+        "egress_ip_count": "Egress IPs",
+        "healthy_egress_ip_count": "Healthy IPs",
+        "version": "Version"
+    },
     "mastodon": {
         "user_count": "Users",
         "status_count": "Posts",

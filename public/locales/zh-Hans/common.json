@@ -434,6 +434,15 @@
         "dataRelayed": "中继",
         "transferRate": "Rate"
     },
+    "resin": {
+        "ok": "在线",
+        "unknown": "未知",
+        "healthy_nodes": "健康节点",
+        "total_nodes": "节点总数",
+        "egress_ip_count": "出口 IP",
+        "healthy_egress_ip_count": "健康 IP",
+        "version": "版本"
+    },
     "mastodon": {
         "user_count": "Users",
         "status_count": "帖子",

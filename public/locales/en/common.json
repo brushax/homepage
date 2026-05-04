@@ -437,6 +437,8 @@
     "resin": {
         "ok": "Online",
         "unknown": "Unknown",
+        "ingress_bps": "Download",
+        "egress_bps": "Upload",
         "healthy_nodes": "Healthy",
         "total_nodes": "Nodes",
         "egress_ip_count": "Egress IPs",

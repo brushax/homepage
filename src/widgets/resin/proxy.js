@@ -72,22 +72,31 @@ export default async function resinProxyHandler(req, res) {
   const baseURL = widget.url?.replace(/\/+$/, "");
   const infoURL = new URL(`${baseURL}/api/v1/system/info`);
   const poolURL = new URL(`${baseURL}/api/v1/metrics/snapshots/node-pool`);
+  const throughputURL = new URL(`${baseURL}/api/v1/metrics/realtime/throughput`);
   const healthURL = new URL(`${baseURL}/healthz`);
 
   const headers = authHeaders(widget);
 
-  const [infoResult, poolResult, healthResult] = await Promise.all([
+  const [infoResult, poolResult, throughputResult, healthResult] = await Promise.all([
     fetchJSON(infoURL, headers),
     fetchJSON(poolURL, headers),
+    fetchJSON(throughputURL, headers),
     fetchHealth(healthURL),
   ]);
 
-  if (infoResult.status !== 200 || poolResult.status !== 200 || healthResult.status !== 200) {
+  if (
+    infoResult.status !== 200 ||
+    poolResult.status !== 200 ||
+    throughputResult.status !== 200 ||
+    healthResult.status !== 200
+  ) {
     const failed =
       infoResult.status !== 200
         ? { url: infoURL, status: infoResult.status, data: infoResult.data }
         : poolResult.status !== 200
           ? { url: poolURL, status: poolResult.status, data: poolResult.data }
+          : throughputResult.status !== 200
+            ? { url: throughputURL, status: throughputResult.status, data: throughputResult.data }
           : { url: healthURL, status: healthResult.status, data: healthResult.data };
 
     logger.error("Error getting data from Resin: %d. Data: %o", failed.status, failed.data);
@@ -100,9 +109,15 @@ export default async function resinProxyHandler(req, res) {
     });
   }
 
+  const latestThroughput = Array.isArray(throughputResult.data?.items)
+    ? throughputResult.data.items[throughputResult.data.items.length - 1]
+    : null;
+
   return res.status(200).json({
     status: healthResult.data?.status ?? "ok",
     version: infoResult.data?.version ?? null,
+    ingress_bps: latestThroughput?.ingress_bps ?? 0,
+    egress_bps: latestThroughput?.egress_bps ?? 0,
     total_nodes: poolResult.data?.total_nodes ?? 0,
     healthy_nodes: poolResult.data?.healthy_nodes ?? 0,
     egress_ip_count: poolResult.data?.egress_ip_count ?? 0,

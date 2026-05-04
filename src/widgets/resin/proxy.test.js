@@ -46,6 +46,18 @@ describe("widgets/resin/proxy", () => {
           }),
         ),
       ])
+      .mockResolvedValueOnce([
+        200,
+        "application/json",
+        Buffer.from(
+          JSON.stringify({
+            items: [
+              { ingress_bps: 1234, egress_bps: 5678 },
+              { ingress_bps: 1000000, egress_bps: 2000000 },
+            ],
+          }),
+        ),
+      ])
       .mockResolvedValueOnce([200, "application/json", Buffer.from(JSON.stringify({ status: "ok" }))]);
 
     const req = { query: { group: "g", service: "svc", endpoint: "stats", index: "0" } };
@@ -53,15 +65,18 @@ describe("widgets/resin/proxy", () => {
 
     await resinProxyHandler(req, res);
 
-    expect(httpProxy).toHaveBeenCalledTimes(3);
+    expect(httpProxy).toHaveBeenCalledTimes(4);
     expect(httpProxy.mock.calls[0][0].toString()).toBe("https://resin.example.com/api/v1/system/info");
     expect(httpProxy.mock.calls[1][0].toString()).toBe("https://resin.example.com/api/v1/metrics/snapshots/node-pool");
-    expect(httpProxy.mock.calls[2][0].toString()).toBe("https://resin.example.com/healthz");
+    expect(httpProxy.mock.calls[2][0].toString()).toBe("https://resin.example.com/api/v1/metrics/realtime/throughput");
+    expect(httpProxy.mock.calls[3][0].toString()).toBe("https://resin.example.com/healthz");
     expect(httpProxy.mock.calls[0][1].headers.Authorization).toBe("Bearer token");
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({
       status: "ok",
       version: "1.0.0",
+      ingress_bps: 1000000,
+      egress_bps: 2000000,
       total_nodes: 100,
       healthy_nodes: 80,
       egress_ip_count: 30,

@@ -437,6 +437,8 @@
     "resin": {
         "ok": "在线",
         "unknown": "未知",
+        "ingress_bps": "下载速率",
+        "egress_bps": "上传速率",
         "healthy_nodes": "健康节点",
         "total_nodes": "节点总数",
         "egress_ip_count": "出口 IP",

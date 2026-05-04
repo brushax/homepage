@@ -24,9 +24,9 @@ describe("widgets/resin/component", () => {
     });
 
     expect(container.querySelectorAll(".service-block")).toHaveLength(4);
-    expect(screen.getByText("widget.status")).toBeInTheDocument();
+    expect(screen.getByText("resin.ingress_bps")).toBeInTheDocument();
+    expect(screen.getByText("resin.egress_bps")).toBeInTheDocument();
     expect(screen.getByText("resin.healthy_nodes")).toBeInTheDocument();
-    expect(screen.getByText("resin.total_nodes")).toBeInTheDocument();
     expect(screen.getByText("resin.egress_ip_count")).toBeInTheDocument();
   });
 
@@ -35,6 +35,8 @@ describe("widgets/resin/component", () => {
       data: {
         status: "ok",
         version: "1.0.0",
+        ingress_bps: 1000000,
+        egress_bps: 2000000,
         total_nodes: 100,
         healthy_nodes: 80,
         egress_ip_count: 30,
@@ -47,9 +49,9 @@ describe("widgets/resin/component", () => {
       settings: { hideErrors: false },
     });
 
-    expectBlockValue(container, "widget.status", "resin.ok");
+    expectBlockValue(container, "resin.ingress_bps", 1000000);
+    expectBlockValue(container, "resin.egress_bps", 2000000);
     expectBlockValue(container, "resin.healthy_nodes", 80);
-    expectBlockValue(container, "resin.total_nodes", 100);
     expectBlockValue(container, "resin.egress_ip_count", 30);
   });
 });

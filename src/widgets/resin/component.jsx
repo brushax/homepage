@@ -9,7 +9,7 @@ export default function Component({ service }) {
   const { widget } = service;
 
   if (!widget.fields) {
-    widget.fields = ["status", "healthy_nodes", "total_nodes", "egress_ip_count"];
+    widget.fields = ["ingress_bps", "egress_bps", "healthy_nodes", "egress_ip_count"];
   } else if (widget.fields?.length > 4) {
     widget.fields = widget.fields.slice(0, 4);
   }
@@ -23,9 +23,9 @@ export default function Component({ service }) {
   if (!data) {
     return (
       <Container service={service}>
-        <Block field="resin.status" label="widget.status" />
+        <Block label="resin.ingress_bps" />
+        <Block label="resin.egress_bps" />
         <Block label="resin.healthy_nodes" />
-        <Block label="resin.total_nodes" />
         <Block label="resin.egress_ip_count" />
       </Container>
     );
@@ -33,10 +33,12 @@ export default function Component({ service }) {
 
   return (
     <Container service={service}>
-      <Block field="resin.status" label="widget.status" value={t(`resin.${data.status ?? "unknown"}`)} />
+      <Block label="resin.ingress_bps" value={t("common.bitrate", { value: data.ingress_bps ?? 0 })} />
+      <Block label="resin.egress_bps" value={t("common.bitrate", { value: data.egress_bps ?? 0 })} />
       <Block label="resin.healthy_nodes" value={t("common.number", { value: data.healthy_nodes ?? 0 })} />
-      <Block label="resin.total_nodes" value={t("common.number", { value: data.total_nodes ?? 0 })} />
       <Block label="resin.egress_ip_count" value={t("common.number", { value: data.egress_ip_count ?? 0 })} />
+      <Block field="resin.status" label="widget.status" value={t(`resin.${data.status ?? "unknown"}`)} />
+      <Block label="resin.total_nodes" value={t("common.number", { value: data.total_nodes ?? 0 })} />
       <Block label="resin.version" value={data.version ?? "-"} />
       <Block
         label="resin.healthy_egress_ip_count"

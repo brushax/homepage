@@ -11,7 +11,11 @@ export default async function genericProxyHandler(req, res, map) {
   const { group, service, endpoint, index } = req.query;
 
   if (group && service) {
-    const widget = await getServiceWidget(group, service, index);
+    let widget = await getServiceWidget(group, service, index);
+
+    if (req.extraContext?.transformWidget) {
+      widget = req.extraContext.transformWidget(widget);
+    }
 
     if (!widgets?.[widget.type]?.api) {
       return res.status(403).json({ error: "Service does not support API calls" });

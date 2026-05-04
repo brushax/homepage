@@ -14,6 +14,7 @@ widget:
   type: navidrome
   url: http://navidrome.host.or.ip:port
   user: username
-  token: token #md5(password + salt)
-  salt: randomsalt
+  password: password
 ```
+
+You can also provide `token` and `salt` directly if you prefer to manage Subsonic authentication yourself.

@@ -109,9 +109,7 @@ export default async function resinProxyHandler(req, res) {
     });
   }
 
-  const latestThroughput = Array.isArray(throughputResult.data?.items)
-    ? throughputResult.data.items[throughputResult.data.items.length - 1]
-    : null;
+  const latestThroughput = Array.isArray(throughputResult.data?.items) ? throughputResult.data.items[0] : null;
 
   return res.status(200).json({
     status: healthResult.data?.status ?? "ok",

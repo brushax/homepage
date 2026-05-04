@@ -14,7 +14,9 @@ export default function Component({ service }) {
     widget.fields = widget.fields.slice(0, 4);
   }
 
-  const { data, error } = useWidgetAPI(widget, "stats");
+  const { data, error } = useWidgetAPI(widget, "stats", {
+    refreshInterval: Math.max(1000, widget.refreshInterval ?? 2000),
+  });
 
   if (error) {
     return <Container service={service} error={error} />;

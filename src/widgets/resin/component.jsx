@@ -35,8 +35,8 @@ export default function Component({ service }) {
 
   return (
     <Container service={service}>
-      <Block label="resin.ingress_bps" value={t("common.byterate", { value: data.ingress_bps ?? 0 })} />
-      <Block label="resin.egress_bps" value={t("common.byterate", { value: data.egress_bps ?? 0 })} />
+      <Block label="resin.ingress_bps" value={t("common.byterate", { value: data.ingress_bps ?? 0, decimals: 1 })} />
+      <Block label="resin.egress_bps" value={t("common.byterate", { value: data.egress_bps ?? 0, decimals: 1 })} />
       <Block label="resin.healthy_nodes" value={t("common.number", { value: data.healthy_nodes ?? 0 })} />
       <Block label="resin.egress_ip_count" value={t("common.number", { value: data.egress_ip_count ?? 0 })} />
       <Block field="resin.status" label="widget.status" value={t(`resin.${data.status ?? "unknown"}`)} />
